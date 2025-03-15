@@ -1,0 +1,5 @@
+# there may be other requirements for 'include' as a key (whatever user is parsing for)
+# any include that doesn't have a value that is string or list of strings should be unchanged
+include:
+  path: some/path/to
+  reason: another string here

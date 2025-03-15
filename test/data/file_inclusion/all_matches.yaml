@@ -1,0 +1,14 @@
+include:
+  - '1'
+  - "2"
+
+include: [abc, def, ghi]
+
+include: string
+
+include: path/asdf_2.yaml
+
+include:
+  - abc
+  - def_qwer.yaml
+  - ghi/path/file.yaml

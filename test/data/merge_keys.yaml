@@ -1,0 +1,32 @@
+copy_map: &all3s
+  a: 3
+  b: 3
+  c: 3
+
+override_map:
+  a: 1
+  <<: *all3s
+  c: 1
+
+provide_extra:
+  <<: *all3s
+  d: 3
+
+deep_basis: &defaults
+  first:
+    a: 1
+    b: 2
+    c: 3
+  second:
+    d: 4
+    e: 99
+    f: 6
+  third:
+    g: 7
+    h: 8
+    i: 9
+
+real:
+  <<: *defaults
+  second:
+    e: 5

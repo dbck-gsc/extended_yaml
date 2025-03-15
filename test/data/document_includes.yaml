@@ -1,0 +1,7 @@
+---
+include: source_a.yaml
+---
+include: source_b.yaml
+---
+include: source_c.yaml
+...

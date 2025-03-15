@@ -1,0 +1,15 @@
+name: extended_yaml
+description: YAML parser with extra non-standard features
+version: 0.1.0
+homepage:
+
+environment:
+  sdk: ^3.6.0
+
+dependencies:
+  path: ^1.9.1
+  yaml: ^3.1.0
+
+dev_dependencies:
+  lints: ^5.1.1
+  test: ^1.16.0

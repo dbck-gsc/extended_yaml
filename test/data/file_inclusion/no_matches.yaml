@@ -1,0 +1,33 @@
+
+# not a string (number)
+include: 7
+
+# not a string (map)
+include:
+  fruits:
+    - banana
+    - apple
+    - pear
+
+# not a list of strings (list of number)
+include: [1,2,3,4]
+
+# not a list of strings (list of number)
+include:
+  - 1
+  - 2
+  - 3
+  - 4
+
+# not a list of strings (list of map)
+include:
+  - item: a
+  - item: b
+  - item: c
+
+# not root
+root:
+  include:
+    - a
+    - b
+    - c

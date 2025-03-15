@@ -1,0 +1,6 @@
+map: &basemap
+  a: 1
+  b: 2
+  c: "string"
+
+another: *basemap
