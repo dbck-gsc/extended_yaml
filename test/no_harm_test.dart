@@ -58,5 +58,5 @@ void main() {
       assert(map.containsKey('c'));
       expect(map['c'], 'c');
     }
-  }, skip: 'not supported yet');
+  });
 }

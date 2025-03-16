@@ -67,8 +67,6 @@ include: path/to/file.yaml
 
 Currently, include directives are not recursively resolved. Only the root yaml has includes processed.
 
-Multiple-document files are also not currently supported.
-
 ## Usage
 
 Pass the string-encoded yaml into `loadExtendedYaml`.
