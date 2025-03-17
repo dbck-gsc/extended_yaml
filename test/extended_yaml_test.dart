@@ -75,14 +75,14 @@ void main() {
     });
   });
 
-  group('future features', () {
+  group('iterative file inclusion', () {
     test('deep include', () async {
       String yamlString = File('test/data/include_include.yaml').readAsStringSync();
       final Future<String> Function(String) opener = FileOpener(Directory('test/data')).getFile;
       final result = await loadExtendedYaml(yamlString, opener) as Map<dynamic, dynamic>;
       assert(result.containsKey('a_map'));
       expect(result['a_map'], 'abc');
-    }, skip: 'not supported yet');
+    });
 
     test('diamond include', () async {
       String yamlString = File('test/data/diamond_inclusion.yaml').readAsStringSync();
@@ -96,6 +96,6 @@ void main() {
 
       assert(result.containsKey('c_map'));
       expect(result['c_map'], 'abc');
-    }, skip: 'not supported yet');
+    });
   });
 }

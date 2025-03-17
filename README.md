@@ -65,7 +65,7 @@ include: path/to/file.yaml
 
 #### Limitations
 
-Currently, include directives are not recursively resolved. Only the root yaml has includes processed.
+At least to start off, this is a wrapper around the `yaml` package to add additional functionality. There are limits to the performance this package can provide. Eventually, this may get its own parser; but until then, if you're certain your yaml definition doesn't need extended features, we recommend using the `yaml` packages parsing directly.
 
 ## Usage
 
