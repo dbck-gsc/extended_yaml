@@ -5,10 +5,12 @@ import 'package:extended_yaml/src/file/default_file_opener.dart';
 import 'package:test/test.dart';
 
 void main() {
+  Uri context = Uri.directory('test/data');
+
   group('merge key', () {
     test('basic merging', () async {
       String yamlString = File('test/data/merge_keys.yaml').readAsStringSync();
-      final result = await loadExtendedYaml(yamlString) as Map<dynamic, dynamic>;
+      final result = await parseExtendedYaml(yamlString) as Map<dynamic, dynamic>;
       final overrideMap = result['override_map'] as Map<dynamic, dynamic>;
       expect(overrideMap['a'], 1);
       expect(overrideMap['b'], 3);
@@ -17,7 +19,7 @@ void main() {
 
     test('keeps unique values', () async {
       String yamlString = File('test/data/merge_keys.yaml').readAsStringSync();
-      final result = await loadExtendedYaml(yamlString) as Map<dynamic, dynamic>;
+      final result = await parseExtendedYaml(yamlString) as Map<dynamic, dynamic>;
       final more = result['provide_extra'] as Map<dynamic, dynamic>;
       expect(more['a'], 3);
       expect(more['b'], 3);
@@ -27,7 +29,7 @@ void main() {
 
     test('has deep merging', () async {
       String yamlString = File('test/data/merge_keys.yaml').readAsStringSync();
-      final result = await loadExtendedYaml(yamlString) as Map<dynamic, dynamic>;
+      final result = await parseExtendedYaml(yamlString) as Map<dynamic, dynamic>;
       final replace = result['real'] as Map<dynamic, dynamic>;
 
       assert(replace['first'] is Map);
@@ -55,7 +57,7 @@ void main() {
   group('including files', () {
     test('test list inclusion', () async {
       String yamlString = File('test/data/include.yaml').readAsStringSync();
-      dynamic result = await loadExtendedYaml(yamlString, FileOpener(Directory('test/data')).getFile);
+      dynamic result = await parseExtendedYaml(yamlString, fileProvider: DefaultProvider(), context: context);
       assert(result is Map);
 
       final resultMap = result as Map<dynamic, dynamic>;
@@ -69,7 +71,7 @@ void main() {
 
     test('test string inclusion', () async {
       String yamlString = File('test/data/include2.yaml').readAsStringSync();
-      dynamic result = await loadExtendedYaml(yamlString, FileOpener(Directory('test/data')).getFile);
+      dynamic result = await parseExtendedYaml(yamlString, fileProvider: DefaultProvider(), context: context);
       assert(result is Map);
       expect((result as Map<dynamic, dynamic>)['a_map'], 'abc');
     });
@@ -78,16 +80,16 @@ void main() {
   group('iterative file inclusion', () {
     test('deep include', () async {
       String yamlString = File('test/data/include_include.yaml').readAsStringSync();
-      final Future<String> Function(String) opener = FileOpener(Directory('test/data')).getFile;
-      final result = await loadExtendedYaml(yamlString, opener) as Map<dynamic, dynamic>;
+      final result = await parseExtendedYaml(yamlString, fileProvider: DefaultProvider(), context: context)
+          as Map<dynamic, dynamic>;
       assert(result.containsKey('a_map'));
       expect(result['a_map'], 'abc');
     });
 
     test('diamond include', () async {
       String yamlString = File('test/data/diamond_inclusion.yaml').readAsStringSync();
-      final Future<String> Function(String) opener = FileOpener(Directory('test/data')).getFile;
-      final result = await loadExtendedYaml(yamlString, opener) as Map<dynamic, dynamic>;
+      final result = await parseExtendedYaml(yamlString, fileProvider: DefaultProvider(), context: context)
+          as Map<dynamic, dynamic>;
       assert(result.containsKey('a_map'));
       expect(result['a_map'], 'abc');
 

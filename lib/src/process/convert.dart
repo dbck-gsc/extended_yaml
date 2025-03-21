@@ -5,22 +5,20 @@ import 'merge_keys.dart';
 dynamic convertYaml(dynamic yaml) => _processNode(yaml);
 
 dynamic _processNode(dynamic node) {
-  if (node is YamlDocument) {
-    return _processNode(node.contents);
+  switch (node) {
+    case YamlDocument _:
+      return _processNode(node.contents);
+    case YamlScalar _:
+      return node.value;
+    case YamlList _:
+      return _processYamlList(node);
+    case YamlMap _:
+      return _processYamlMap(node);
+    case List<YamlDocument> _:
+      return node.map((YamlDocument doc) => _processNode(doc)).toList();
+    default:
+      return node;
   }
-  if (node is YamlScalar) {
-    return node.value;
-  }
-  if (node is YamlList) {
-    return _processYamlList(node);
-  }
-  if (node is YamlMap) {
-    return _processYamlMap(node);
-  }
-  if (node is List<YamlDocument>) {
-    return node.map((YamlDocument doc) => _processNode(doc)).toList();
-  }
-  return node;
 }
 
 List<dynamic> _processYamlList(List<dynamic> list) {

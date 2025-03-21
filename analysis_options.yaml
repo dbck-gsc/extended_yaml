@@ -13,6 +13,7 @@ linter:
     - avoid_catching_errors
     - avoid_dynamic_calls
     - avoid_escaping_inner_quotes
+    - cast_nullable_to_non_nullable
     - directives_ordering
     - document_ignores
     - eol_at_end_of_file

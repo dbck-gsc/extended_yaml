@@ -1,18 +1,11 @@
 import 'dart:io';
 
-import 'package:path/path.dart' as path;
+import 'file_provider.dart';
 
-///
-/// Looks for a file relative to a directory. If no directory is provided via contructor, [Directory.current] is used.
-///
-class FileOpener {
-  const FileOpener([this._directory]);
+class DefaultProvider implements FileProvider {
+  @override
+  Future<String> getContents(Uri source) => File.fromUri(source).readAsString();
 
-  final Directory? _directory;
-
-  Future<String> getFile(String source) {
-    Directory dir = _directory ?? Directory.current;
-    var file = File(path.join(dir.path, source));
-    return file.readAsString();
-  }
+  @override
+  Uri resolveInclusion(Uri context, String path) => context.resolve(path);
 }

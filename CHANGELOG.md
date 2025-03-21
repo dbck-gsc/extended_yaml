@@ -1,3 +1,7 @@
+## 0.4.0
+
+- Improve include access api
+
 ## 0.3.0
 
 - Support nested inclusion

@@ -9,7 +9,7 @@ import 'package:yaml/yaml.dart';
 void main() {
   test('map parsing', () async {
     String yamlString = File('test/data/no_harm/simple_map.yaml').readAsStringSync();
-    final result = await loadExtendedYaml(yamlString) as Map<dynamic, dynamic>;
+    final result = await parseExtendedYaml(yamlString) as Map<dynamic, dynamic>;
     assert(result.containsKey('map'));
     final map = result['map'] as Map<dynamic, dynamic>;
     expect(map['a'], 1);
@@ -19,7 +19,7 @@ void main() {
 
   test('anchors', () async {
     String yamlString = File('test/data/no_harm/anchors.yaml').readAsStringSync();
-    dynamic result = await loadExtendedYaml(yamlString);
+    dynamic result = await parseExtendedYaml(yamlString);
     dynamic expected = loadYaml(yamlString);
     expect(expected, result);
   });
@@ -27,8 +27,7 @@ void main() {
   test('other include defs intact', () async {
     String yamlString = File('test/data/no_harm/map_with_include_key.yaml').readAsStringSync();
 
-    final result = await loadExtendedYaml(yamlString) as Map<dynamic, dynamic>;
-    print(result);
+    final result = await parseExtendedYaml(yamlString) as Map<dynamic, dynamic>;
     assert(result.containsKey('include'));
     var map = result['include'] as Map<dynamic, dynamic>;
     assert(map.containsKey('path'));
@@ -40,7 +39,7 @@ void main() {
 
   test('documents output', () async {
     String yamlString = File('test/data/no_harm/multiple_docs.yaml').readAsStringSync();
-    dynamic result = await loadExtendedYaml(yamlString);
+    dynamic result = await parseExtendedYaml(yamlString);
 
     assert(result is List);
     for (var doc in result as List<dynamic>) {
