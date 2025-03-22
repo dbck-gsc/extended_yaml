@@ -1,0 +1,33 @@
+name: PR checks
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  style:
+    runs_on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dart-lang/setup-dart@v1
+      - id: pubss 
+        name: fetch
+        run: dart pub get
+      - name: lint
+        run: dart analyze --fatal-infos
+        if: always() && steps.pubs.outcome == 'success'
+      - name: formatting
+        run: dart format --output=none --set-exit-if-changed .
+        if: always() && steps.pubs.outcome == 'success'
+  test:
+    runs_on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dart-lang/setup-dart@v1
+      - id: pubs
+        name: fetch pubs
+        run: dart pub get
+      - name: test
+        run: dart test --platform vm
+        if: always() && steps.pubs.outcome == 'success'

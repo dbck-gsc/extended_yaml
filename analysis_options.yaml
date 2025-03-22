@@ -33,3 +33,6 @@ linter:
     - tighten_type_of_initializing_formals
     - unnecessary_await_in_return
     - use_named_constants
+
+formatter:
+  page_width: 120

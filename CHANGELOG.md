@@ -1,3 +1,7 @@
+## 0.4.1
+
+ - prep for publish
+
 ## 0.4.0
 
 - Improve include access api
