@@ -7,6 +7,10 @@ import 'file/file_provider.dart';
 import 'parse/file_inclusion.dart';
 import 'parse/file_properties.dart';
 import 'process/convert.dart';
+import 'process/post_process/merge_with.dart';
+import 'process/post_process/post_processor.dart';
+
+final List<PostProcessor> _postProcessors = [MergeWithProcessor()];
 
 ///
 /// Parses the string [yaml] containing yaml-encoded data.
@@ -34,7 +38,11 @@ Future<dynamic> loadExtendedYaml(Uri source, {FileProvider? fileProvider}) async
 
 Future<dynamic> _parseSingleDocument(String yaml, FileProvider provider, Uri context) async {
   Future<String> includedYaml = getMergedYamlString(yaml, (provider: provider, context: context));
-  return convertYaml(loadYaml(await includedYaml, recover: true));
+  dynamic converted = convertYaml(loadYaml(await includedYaml, recover: true));
+  for (final PostProcessor postProcessor in _postProcessors) {
+    converted = await postProcessor.process(converted, provider, context);
+  }
+  return converted;
 }
 
 Future<List<dynamic>> _parseDocuments(String yaml, FileProvider provider, Uri context) {

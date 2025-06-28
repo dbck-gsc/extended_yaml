@@ -1,0 +1,5 @@
+merge_with: merge_with_base.json
+
+object:
+  c: 33
+  d: 44
