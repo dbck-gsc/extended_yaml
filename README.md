@@ -43,11 +43,10 @@ i_have_one_too:
     sex: 'male'
 ```
 
-Equivalent yaml:
+Equivalent yaml of the second object:
 
 ```yaml
 i_have_one_too:
-  <<: ref
   dog:
     name: 'Snoopy'
     age: 7
@@ -57,10 +56,40 @@ i_have_one_too:
 
 #### Including files
 
+##### Included as-is
+
 External definitions can be included using an `include` key defining a string or list of strings.
 
 ```yaml
 include: path/to/file.yaml
+```
+
+##### Merging files with the same spec
+
+The `merge_with` directive will merge a base map with the current document map.
+
+The following:
+
+```yaml
+# in a.yaml
+object:
+  a: a value
+  b: another value
+```
+
+```yaml
+merge_with: a.yaml
+
+object:
+  b: overridden value
+```
+
+produces the same as
+
+```yaml
+object:
+  a: a value
+  b: overridden value
 ```
 
 #### Limitations
